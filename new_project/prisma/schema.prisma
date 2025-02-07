@@ -1,0 +1,25 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" //stiamo definando che il nostro datbase è gestito tramite postgress
+  url      = env("DATABASE_URL") //stiamo definando che la nostra connessione al database verra gestita tramite una variabile "d'ambiente"
+}
+
+
+model Game_Guide{
+
+
+}
+
+model Users{
+
+  
+}
