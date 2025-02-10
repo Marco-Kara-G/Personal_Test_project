@@ -9,17 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" //stiamo definando che il nostro datbase è gestito tramite postgress
-  url      = env("DATABASE_URL") //stiamo definando che la nostra connessione al database verra gestita tramite una variabile "d'ambiente"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 
-model Game_Guide{
-
-
-}
-
-model Users{
-
-  
-}
+model User{
+  id Int @id@default(autoincrement())
+  name String
+  email String @unique
+} 
