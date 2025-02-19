@@ -13,46 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              String           @id @default(uuid())
-  age             Int
-  name            String
-  role            Role             @default(BASIC)
-  email           String           @unique
-  writtenPost     Post[]           @relation("writtenBy")
-  favouritedPost  Post[]           @relation("likedBy")
-  userPreferences UserPreferences?
 
-  @@unique([name, age])
-  @@index([email])
+
+model Game {
+  id           String       @id @default(uuid())
+  title        String       @unique
+  description  String
+  release_date DateTime
+  developer    Developer    @relation(fields: [dev_id], references: [id])
+  dev_id       String
+  publisher    Publisher    @relation(fields: [pub_id], references: [id])
+  pub_id       String
+  genre        Game_genre[]
+  created_at   DateTime     @default(now())
+  update_at    DateTime     @updatedAt
 }
 
-model UserPreferences {
-  id           String  @id @default(uuid())
-  emailUpdates Boolean
-  user         User    @relation(fields: [userId], references: [id])
-  userId       String  @unique
+model Developer {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  region  String
+  founded DateTime
+  games   Game[]
 }
 
-model Post {
-  id              String     @id @default(uuid())
-  title           String
-  rating          Float
-  create_at       DateTime   @default(now())
-  update_at       DateTime   @updatedAt
-  author          User       @relation("writtenBy", fields: [authorId], references: [id])
-  authorId        String
-  favouritedBy    User       @relation("likedBy", fields: [favouriteByIDId], references: [id])
-  favouriteByIDId String
-  category        Category[]
+model Publisher {
+  id     String @id @default(uuid())
+  name   String @unique
+  region String
+  games  Game[]
 }
 
-model Category {
-  id    String @id @default(uuid())
-  posts Post[]
+model Game_genre {
+  id      String @id @default(uuid())
+  genre   String
+  game    Game   @relation(fields: [game_id], references: [id])
+  game_id String
 }
 
-enum Role {
-  BASIC
-  ADMIN
-}
+
+
